@@ -1,0 +1,1537 @@
+\documentclass[a4paper,11pt,titlepage]{article}
+
+%\usepackage{doi}
+%\usepackage{url}
+
+\usepackage{a4wide}
+\usepackage[utf8]{inputenc}
+
+%\usepackage[tablesonly]{endfloat}
+\usepackage{endfloat}
+\renewcommand{\efloatseparator}{\mbox{}}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\usepackage{verbatim}
+\usepackage{graphicx}
+
+\usepackage{natbib}
+
+\bibliographystyle{apalike}
+
+<<optsset, include=FALSE>>=
+require(knitr)
+opts_chunk$set(engine='R',dev='pdf',fig.path='figs/wien-',tidy=FALSE,fig.height=3.5,fig.width=8,strip.white=TRUE,echo=FALSE,message=FALSE,cache=FALSE)
+@
+
+\newcommand{\bx}{\ensuremath{\mathbf{x}}}
+\newcommand{\bbeta}{\ensuremath{\boldsymbol{\beta}}}
+\newcommand{\R}{{\bf R}}
+\newcommand{\code}[1]{{\tt #1}}
+
+<<fix,echo=FALSE,output=FALSE,cache=FALSE>>=
+options(width = 80, show.signif.stars = FALSE)
+require(xtable)
+@ 
+
+
+\title{Long-term effects on life expectancy of the 1867 harvest
+  failure in northern Sweden} 
+
+\date{Centre for Population Studies \\
+Ageing and Living Conditions \\
+Umeå University \\
+Umeå, Sweden}
+\author{G\"oran Brostr{\"o}m and S{"\o}ren Edvinsson \\
+Centre for Population Studies, Ageing and Living Conditions \\
+Umeå University, Umeå, Sweden}
+
+\begin{document}
+%\SweaveOpts{concordance=TRUE}
+
+%<<include=FALSE>>=
+%opts_chunk$set(concordance=TRUE)
+%@
+
+
+\maketitle
+
+\begin{abstract}
+
+Conditions, such as diseases or malnutrition, in early childhood or even
+during gestation influence health later in life. The Nordic countries
+experienced frequent harvest failures during the 19th century, leading to
+serious direct consequences. Previous analyses of the last big harvest
+failure in Finland in 1867 have reached different conclusions regarding its
+long-term effects on health for the age cohorts experiencing the famine. In
+this paper we use micro-data from northern Sweden to investigate possible
+effects on all-cause mortality and cardiovascular mortality in old age. We
+find no effect on all-cause mortality of exposure in utero or during
+infancy, but experiencing the famine during early childhood 1--2 years
+shortened life expectancy at age 60. The effect varied however between
+sexes. Concerning cardiovascular mortality, the associations were weaker,
+with the most important being exposure during infancy.
+
+
+
+\end{abstract}
+
+\section{Introduction}
+
+Crises related to harvest failures have not been seen for long in the
+Nordic countries. Moving back in history, the situation was 
+very different. These countries experienced frequent harvest failures
+during the 19th century, leading to famines with serious demographic consequences. The last big harvest failure in Sweden and Finland occurred
+in 1867, a year living in people’s memories long into the 20th century. It
+lead to under-nourishment and extensive migration of people searching for
+jobs to provide for themselves and their families or to find food and to be
+supported. The immediate health effects were markedly stronger in Finland
+than in Sweden. Mortality increased to extremely high levels on the Finnish
+side of the border while the effect was much more moderate in Sweden. There
+are several possible explanations for this, for example different strength
+of the harvest failure, differences related to the role of agriculture in
+the economy and different societal capacity to handle crises
+\citep{nelson88,pitk93}.
+
+Apart from immediate health effects, famines and harvest failures can
+influence the lives of people much later in life. Health is not only
+related to present conditions, but also to experiences throughout the life
+course. Conditions in early childhood or even before birth are important as described by \citet{bar95} who
+suggested that conditions in utero determined health later in life. 
+
+
+We analyze the long-term effects of experiencing the harvest failure of
+1867 during early life or during pregnancy for a population born in 19th
+century Skellefteå region Sweden that are followed to old age. All-cause
+mortality and mortality from cardiovascular diseases for those being young during the crisis are compared with those
+having no serious crises of this sort in early childhood. Our main questions are the
+following: 
+
+\begin{itemize}
+\item Did the harvest failure in 1867 affect mortality later in life for those
+  experiencing the crisis during infancy or early childhood?  
+\item	Did the harvest failure in 1867 affect mortality later in life for
+  those experiencing the crisis in utero?  
+\item	Are these early-life crises mediated by conditions in adult life?
+\item Is mortality from cardiovascular diseases associated with
+  early-life crises and in particular in utero?
+\item Are there selection effects disturbing the picture?
+\end{itemize}
+
+Early-life conditions and their effects on health later in life have been in
+research focus during the last decades \citep{elpr92,galo04,bemi09,lumey11}.
+With an increasing proportion of the population reaching high
+age, we need to understand how modern man has been able to reach that age,
+and what determines the health of the elderly, something that require an
+understanding of the full life course from birth to old age. Many have used
+time series of harvest results as indicators of nutritional status
+\citep{beli00,beli03, qua13}. \citet{beb00} used individual data from
+northern Sweden (the same area as in this paper) to study possible effects
+of changes in food availability during the pre-natal period. Some have
+adopted an ecological approach where birth environment is considered as an
+indicator of childhood conditions \citep{for77,for78,bar93,bar95,segb12b,
+  gbse13}. In many of these studies, a long-term effect have been
+identified. Other studies are performed on what could be called natural
+experiments, that is, contexts where access to food was very limited for a
+(fairly) well-defined period of time. This is the case for the Dutch Hunger
+Winter 1944--45 \citep{lumpop94,lumey07} or the hunger
+catastrophe during the Great Leap Forward in China 1959--61 \citep{shi13}.
+
+The 1867 harvest failure in the Nordic countries has attracted the interest
+of some researchers in order to study the long-term effects of possible
+under-nutrition during childhood. \citet{kann97} found that, although the
+immediate effects on mortality was strong, the harvest failure in Finland
+lead to no harmful after-effects. \citet{dobl13} have re-analyzed
+the data by testing the hypothesis of selection effects of the
+famine. They claimed that, when ``cohort heterogeneity is controlled for'', life
+expectancy at age 60 was lower for men born during the famine. The results
+are thus inconclusive and we still have not reached any firm conclusion on
+the issue. A restriction of these two published studies is that they both are
+based on aggregate national mortality data on age
+cohorts; to resolve the type of question they raise, individual-level data are 
+better adapted. 
+
+The present paper utilizes such individual-level data; digitized parish
+registers from the Demographic Data Base, Umeå University \citep{edv00} for
+a couple of Swedish parishes in the Skellefteå region, northern Sweden. We
+analyze the survival in old age (60+) depending on exposure to the 1867
+harvest failure during the prenatal period, infancy or early
+childhood. While the health effects was less and the harvest failure was
+milder in Sweden than in Finland, the people in the northernmost parts of
+the country certainly experienced severe hardship during these years. This
+crisis was remarkable in comparison with other years at that time. Complete
+harvest failures had become rare, and the famine of 1867--68 was
+exceptional.  
+
+The rest of the paper is organized as follows. In Section~2, models for life
+course analysis are discussed, with a focus on recent developments in
+mediation and causality. Section~3 describes data and the variables
+considered in the analysis, and Section~4 is a presentation of the
+Skellefteå region and its history of famines. In Section~5 we give some
+summary statistics for reference, and Sections~6--8 contain the core of the
+analyses. In all the analyzes we used the environment {\bf R} \citep{cran},
+especially the package {\tt eha} \citep{eha, gb12}. A concluding discussion follows in
+Section~9. 
+
+
+\section{Life course analysis and pathways from early life conditions to old age mortality}
+
+Life course analysis identifies different broad models on how previous
+experiences influence later outcomes, for example if there is a direct link
+from exposure to outcome or if there are mediating, modifying or
+accumulating conditions in between \citep{kube04}. In our case, we also consider the
+possibility that the initial exposure is mediated by later experiences. 
+
+
+%% \subsection{Pathways from early life conditions to old age mortality} 
+A crucial question is what sort of early life influences we consider to
+have impact on old-age health. Two obvious early life conditions relevant
+in this case are nutritional status and diseases in
+childhood. It is often difficult to distinguish between the
+role of low nutrition caused by lack of food or malnutrition on the one hand and infections on the other
+since they are interrelated and acts in a synergistic way. Infections lower
+nutritional status and low nutritional status makes people more exposed to
+infections or rather they will be more severely affected by the disease
+\citep{fog04,maho84}. Malnutrition during gestation or
+early childhood can lead to permanent damage on cellular development
+and body organs. Underfeeding during critical periods of gestation can
+according to \citet{bar93,bar95} lead to low birth weight and increased
+blood pressure later in life. \citet{beb00} suggest that changes in nutritional status during gestation increases the risk of sudden death. 
+
+
+Studies have shown that short stature is connected to higher
+mortality which indicates that a general bad nutritional status in
+childhood can lead to problems later in life \citep{fog04}. \citet{cabr06} describe the
+accumulation of negative health effects as ``diminished entelechy'', that
+is, when some function is not completely realized or
+expressed. \citet{ficr04} and \citet{crfi05,crfi06} suggest that lifetime
+exposure to infectious diseases and inflammations are important
+explanations to high mortality and diseases later in life. Research has linked
+inflammations to increased risks of heart problems, stroke and
+cancer. According to them, chronic inflammatory mechanisms damages
+throughout life and can link early-life conditions to disease and death in
+old age. Their conclusions have however been questioned by \citet{bava05}.
+
+\subsection{Mediating factors}
+
+Other conditions and events during the life course needs to be considered as well. We may
+distinguish between later conditions and events that are unrelated to the
+individual early-life conditions (for example natural disasters, economic
+development or ravaging epidemics) and those that are effects of these
+circumstances; that is, a pathway model where the original effects are
+mediated through these later conditions. Here, we identify two important issues that may be
+relevant --- social position and marital status in midlife, thereby not claiming that these are the only possible or maybe not even the most important.
+
+Bad childhood conditions may influence cognitive
+ability negatively and increase health problems in
+adulthood. All this can hinder social advancement and occupational
+career. \citet{bebr09} found that exposure to disease in
+infancy limited the possibilities to belong to the landed classes in
+adulthood in 19th century Scania. \citet{pal09} found an association between health in
+early life and social position in adulthood. \citet{qua13} demonstrated 
+that Scanian females of lower social position that were exposed to high IMR (in particular during epidemics of whooping cough) had lower probability to attain high SES. A reasonable assumption is that the exposure impaired health in adulthood and old age.
+
+In present-day society, social class is one of the strongest determinants
+for individual health. Access to different kinds of resources (economic,
+social or cultural) have been found to be very important for survival. A
+reasonable assumption is that such resources were equally or even more
+important in historical contexts. Empirical findings related to this issue
+are however few and do not point in the same direction
+\citep{bevp11}. Instead many studies indicate that the association may have 
+been weaker in societies characterized by high mortality, something that
+has been confirmed in studies of the Sundsvall region
+\citep{edli11,edbr12}. 
+%%An assumption is that the 
+%%effect of social position was counteracted by other determinants, thereby
+%%eliminating the association. 
+The possible mediating impact is still of
+interest to analyze. 
+
+The importance of marital status for health and survival is well-documented
+both concerning the present-day world and in historical contexts. Being
+married was one of the strongest protective factors in 19th century Sweden
+\citep{edbr12,edli11,wil99}. It provides individuals with an important
+family network 
+that can 
+give both financial, practical and emotional support. It also strengthens
+self-esteem and can be an important factor for success. Men had much more to gain from being married, while the advantages
+for females in reproductive years were fairly small \citep{edv92}. It is possible that prospects for marriage was influenced by
+conditions in childhood, thus acting as a mediating factor between
+early-life conditions and survival in old age. Diseases in childhood may
+have weakened the physical constitution or resulted in handicaps, thus
+making the unfortunate less successful on the marriage market. Diseases may
+even have left physical marks, making the appearance less attractive \citep{sko03}. 
+
+% Related to this is the possible mediating factor of reproduction. Diseases
+% in infancy and childhood may lead to no or fewer children from different
+% reasons. One is obviously related to the already discussed factor of
+% marriage since most of child-bearing took place within marriage. There may
+% however also be effects on the possibility to reproduce. Some diseases can
+% lead to infertility or to reduced fecundity. \citet{stor11} found that females exposed to disease in childhood had a significantly reduced fertility. Having no or few children can
+% furthermore be an aspect of higher mortality risks in old age. In a society
+% with little public provision for elderly, the access to a family network improved survival in old age \citep{edbr12}.This aspect will however not be dealt with in this paper.  
+
+
+% \subsection{Full life course influences on old age health}
+% A basic assumption in this paper is that disease events during the whole
+% life course influence later health. Certain age groups are however of more
+% interest when analysing cohort effects of health. There are two main
+% reasons for this. The first is that infections during some ages will result
+% in more serious damages. This is the case for effects that mainly or
+% exclusively are related to a restricted development period. The foetal
+% origin hypothesis is one example of this. The other is that we are more
+% exposed to infections in some periods of our life. During the first years
+% of life before our immune system is not fully developed, meaning that the
+% risk of attracting a disease is high.
+
+% Another question is which age group within childhood provides the best
+% indicator for health conditions in early life. Infancy is a very sensitive
+% period in life, but in some respects it may capture external disease load
+% less efficient than other age groups. During the first months, the newborn
+% child is partly protected through the mother’s immunity that was
+% transferred to the baby from the placenta. Furthermore, if the child is
+% breastfed he or she receives antibodies from the mother. Deaths during the
+% neonatal period were also to a large extent caused by congenital problems
+% that may be less related to the prevailing disease environment. 
+% Finally, different feeding and child care practises were crucial for the
+% survival of the children, something that of course had impact on the
+% disease load. Infant mortality may thus be not specific enough to identify
+% conditions of heavy disease load in general. An alternative would be to
+% instead use post-neonatal or early childhood mortality. \citet{har01}
+% pointed out that Sweden may have been a peculiar case in having a cohort
+% effect on mortality later in life. In other cases, early childhood
+% mortality seems to fit the pattern better. Nevertheless, \citet{beli00}
+% found that infant mortality rates proved to be good indicators of health
+% conditions in Sweden. Furthermore, infant mortality is usually a good
+% measure taking into consideration that environments with high infant
+% mortality in most cases also have high child mortality. 
+
+\subsection{The statistical model}
+
+The causal pathway from an exposure to an outcome is a topic
+that lately has been attracting strong attention in the statistical and
+epidemiological communities. Of special interest is
+how to measure and estimate the mediating effect of factors on the causal
+pathway. \citet{lh11} suggested how to solve this problem in a
+survival context, and \citet{vw11} gave a more general overview the
+topic. This is further
+developed in \citet{gbse13}. The approach taken by \citet{lh11} is a
+combination of dynamic path 
+analysis \citep{ffba06} and 
+causal analysis based on counterfactuals \citep{rubin74,pearl00}. This
+framework seems to require linear models, which is solved by \citet{lh11} by
+applying Aalen's additive hazards model \citep{aa89}. 
+The general (\emph{too} general) solution to the mediation problem is given
+by \citet{pearl05}. One instance of implementation of this is given by
+\citet{lavabe12} and exemplified by \citet{nord13}. 
+%%, which however didn't lead to any positive results.
+In our version, an accelerated failure time model with the Gompertz distribution was applied to the survival data. The mediators we considered were \emph{marital status at age 50} and \emph{SOCPO at age 50}, 
+%However, since we found no mediating effects, results regarding mediation are omitted.
+but they do not seem to be affected at all by
+exposure to the famine. However, social advancement for lower class men was 
+significantly obstructed by being in the exposed group; on the other hand, 
+it had no impact om mortality, so the mediation hypothesis weakened considerably, and not considered later.
+
+In the specific
+situation studied here, the model is specified by two equations. The first
+describes the effect of \emph{famine} at birth or in childhood on SES at 50:
+\begin{equation}\label{eq:medi}
+\text{SOCPO.50} = \alpha + \beta_1 \text{famine} + \epsilon.
+\end{equation}
+This is ordinary linear regression, where the response, {\tt SOCPO.50} is
+measured on an integer scale with six steps, ranging from -3 to +2. Cases
+with unknown SOCPO are excluded from the analysis.   
+{\tt IMR.birth} is measured as the number of infant deaths per 100 births
+centred around its mean, so it
+ranges from -11 to 22. The same construct is made for {\tt cdr.50}, which
+ranges from -0.6 to 1.2.
+
+The second equation describes the remaining years in life ($T$) after age
+60. In our version, Aalen's additive model is replaced by the accelerated
+failure time (AFT) model, along the lines described by \citet{vw11}:
+\begin{equation}\label{eq:aft}
+\log(T) = \gamma + \beta_2 \text{IMR.birth} + \beta_3 \text{SES.50} + \eta.
+\end{equation}
+A complicating factor in the estimation of \eqref{eq:aft} is that data are right
+censored and possibly left truncated. This, however, is easily taken care
+of by using the R \citep{cran} package eha \citep{eha13,gb12} using the
+Gompertz distribution 
+(that is, $\exp(\eta)$ follows the Gompertz distribution) in the {\tt
+  aftreg} function.  \citet{gbse13} explored this. Diagnostic checks show that the Gompertz
+distribution gives excellent fits in all the models we are considering. 
+
+
+The direct effect is simply measured by $\beta_2$ from \eqref{eq:aft},
+while the indirect effect is given by the product $\beta_1 \beta_3$,
+where $\beta_1$ is taken from \eqref{eq:medi} and $\beta_3$ from
+\eqref{eq:aft}. The estimation of these quantities is straightforward,
+while the construction of confidence intervals is slightly more
+complicated. We have chosen to solve this problem by simulation.%, see
+%\citet{gbse13} for details.  \marginpar{Check this?}
+
+\section{Data}
+
+<<data,echo=FALSE>>=
+library(xtable)
+library(skel14)
+datum1 <- 18670801
+datum2 <- 18680731
+source("R/put.crises.R")
+old <- put.crises(obs, c0 = tillTid(datum1), c1 = tillTid(datum2))
+old$inUtero <- old$preg
+old$Infancy <- old$t01
+##old$Childhood <- old$t13 + old$t01 ## NOTE!!! Changed 28 sep 2014.
+old$Childhood <- old$t13 ## NOTE!!! Changed 1 Oct 2014.
+old <- old[old$birthdate > 1853 & old$birthdate < 1881, ]
+##old$period <- cut(old$birthdate, c(1853, 1866.4, 1867, 1881),
+  ##                labels = c("before", "Childhood", "after"))
+old$exit <- ifelse(old$exit <= old$enter, old$enter + 0.002, old$exit)
+##old <- age.window(old, c(60, 100)) ## Later ...
+civst.50 <- old$civst[old$enter < 55 & old$exit > 45]
+id.50 <- old$id[old$enter < 55 & old$exit > 45]
+indx <- match(old$id, id.50)
+old$civst.50 <- civst.50[indx]
+months <- 3
+t13cut <- months / 12
+##old$Childhood <- factor(old$Childhood > Childhoodcut, labels = c("Not exposed", "Exposed")) 
+   ##factor(old$birthdate < 1867 & old$birthdate > 1866.4, labels = c("Not exposed", "Exposed")) # kolla
+#old$Preg <- old$preg #factor(old$preg > 0.1, labels = c("Not exposed", "Exposed"))
+##old$Infant <- old$t01 #factor(old$t01 > 0.1, labels = c("Not exposed", "Exposed"))
+old <- old[order(old$id, old$pers_lopnr), ]
+old <- rc(old)
+## Save a copy of 'old' before 'age.window':
+old.old <- old
+
+old <- age.window(old, c(60, 100))
+old <- rc(old)  # Must always be done after 'age.window' or other subsetting!
+old$enter <- old$enter - 60 ## Start at age 60
+old$exit <- old$exit - 60 ## Ditto
+old$birthYear <- floor(old$birthdate) - 1867
+old$birthper <- cut(old$birthdate, c(1853,  1864, 1869, 1881), 
+                    labels = c("1853-63", "1864-68", "1868-80"))
+old$ever.married <- ifelse(old$civst == "unmarried", 0, 1)
+old$ever.married <- factor(old$ever.married, labels = c("no", "yes"))
+id <- old$id[is.na(old$civst.50) & old$civst == "unmarried" & old$lopnr == 1]
+old$civst.50[old$id %in% id] <- "unmarried"
+id <- old$id[is.na(old$civst.50) & old$civst != "unmarried" & old$lopnr == 1]
+old$civst.50[old$id %in% id] <- "married" # Is this OK?
+## Fix illog:
+old$civst[old$civst == "unmarried" & old$civst.50 == "married"] <- 
+    "prev.married"
+old$civst[old$civst == "unmarried" & old$civst.50 == "prev.married"] <- 
+    "prev.married"
+old$ever.married.50 <- ifelse(old$civst.50 == "unmarried", 0, 1)
+old$ever.married.50 <- factor(old$ever.married.50, labels = c("no", "yes"))
+old$Childhoodcut <- cut(old$Childhood, c(-0.0001, 1.667, 2.0001),
+                  labels = c("Not exposed", "Exposed"))
+old$ses.50 <- ifelse(old$socpo.50 %in% c(4, 5), 1, 0)
+old$ses.50 <- factor(old$ses.50, labels = c("Low", "High"))
+old$ses.birth <- ifelse(old$socpo.birth %in% c(4, 5), 1, 0)
+old$ses.birth <- factor(old$ses.birth, labels = c("Low", "High"))
+old$firstborn <- as.numeric(!is.na(old$parity) & old$parity == 1)
+indx <- match(old$id, person$ID)
+old$ab <- as.numeric(person$AB[indx] == 2)
+old <- old[order(old$id, old$pers_lopnr), ]
+old <- rc(old) ## New
+## Create 'old1':
+old1 <- old[old$lopnr == 1, ]
+old1$exit <- old$exit[old$lopnr == old$antrec]
+old1$event <- old$event[old$lopnr == old$antrec]
+load("ob.rda") ## Infant mortaliy
+indx <- match(old1$id, ob$id)
+old1$imr.birth <- ob$imr[indx]
+save(old, file = "old.rda")
+## Remove 'old'! (To avoid mix-up)
+rm(old) ## NOTE!
+old1 <- old1[order(old1$birthdate), ]
+old.old$season <- floor(5 * (old.old$birthdate - floor(old.old$birthdate))) + 1 #1, 2, ..., 5
+old.old2 <- old.old[old.old$season > 2.5, ]
+old1$season <- floor(5 * (old1$birthdate - floor(old1$birthdate))) + 1 #1, 2, ..., 5
+who <- is.na(old1$civst.50)
+old1$civst.50[who] <- old1$civst[who]
+old2 <- old1[old1$season >= 2.5, ]
+old2$season <- factor(old2$season, labels = c("summer", "fall", "winter"))
+antid <- length(unique(old1$id))
+antdeaths <- sum(old1$event)
+#old1$socpo.birth <- factor(old1$socpo.birth == 0, labels = c("Not missing", "Missing"))
+#old1$socpo.50 <- factor(old1$socpo.50 == 0, labels = c("Not missing", "Missing"))
+##Check it out: !!!!!!!!!!!!!!!!!!!!!!!
+old1 <- old1[old1$socpo.50 > 0.5 & old1$socpo.birth > 0.5, ]
+##cat("Missing SOCPO.birth and SOCPO.50 removed\n")
+save(old1, file = "old1.rda") ## For fast debugging
+save(old.old, file = "old.old.rda")
+##Check it out: !!!!!!!!!!!!!!!!!!!!!!!
+##old1 <- old1[old1$socpo.50 > 0.5 & old1$socpo.birth > 0.5, ]
+@ 
+
+Data come from the parish registers of parishes in the Skellefteå region
+in northern Sweden 1853--1960 in the form of digitized life trajectories
+from the DDB, Umeå University \citep{edv00,viedbr02}. Parish
+registration include catechetical registers, where all parishioners are
+recorded and where their presence in the parish is followed continuously,
+and birth, death, marriage and migration registers where the vital events
+are recorded. 
+%%The region under observation was originally one parish that
+%%during our period of investigation split up into seven parishes. 
+Individual information about the parishioner’s presence, personal characteristics and
+vital events has been linked both within and between parishes. Accordingly,
+we have complete continuous information from birth to end of registration
+on all parishioners as long as they stayed in the region, allowing us to
+reconstruct their occupational careers, residential moves and marital
+statuses. Included are all those born in the region 1853--1880, being alive
+and resident in the region at least at some time during the 20th
+century, after age 60; in total \Sexpr{antid} individuals and \Sexpr{antdeaths} deaths. 
+Every person is followed until death, 
+out-migration or end of registration. Almost complete registration of
+causes of death is available from 1911 onward. We have also added the
+requirement that we have information on social position both at birth and
+at age~50. 
+%%We have therefore excluded 834 individuals. A controlled confirmed that %%those excluded do not influence the basic results. 
+
+We identify all those that had the whole or parts of their gestation,
+infancy or second and third year during the harvest year 1867--68. They are
+compared to those that did not experience this harvest failure during these
+ages. We are here focusing on the 1867--68 famine in order to compare with
+previous studies but also because we assume that this was a particularly
+serious harvest failure. We do however know that there were other years
+with fairly serious crop failures. The other years during our investigated
+period where there are clear indications of harvest failures are 1856,
+ 1865 and 1877, although not leading to as serious consequences as
+the one of 1867. 
+
+The data file consists of periods for each continuous presence with unique
+combination of social position, marital status and place of residence. When
+either of these changed, a new presence period was created. The following
+variables are included or have been controlled for in the analysis. 
+
+\begin{description}
+\item[Date of birth]
+
+\item[Sex] Boy or girl.
+
+\item[Legitimacy] Legitimate or illegitimate birth.
+
+
+\item[ses] A grouped version of {\tt SOCPO}, with two classes, {\tt low}
+  ({\tt SOCPO} = 1--3) and {\tt high} ({\tt SOCPO} = 4, 5). Measured both at birth and at age 50. This also allows us to analyze   inter-generational social mobility, that is, if the person advanced, kept or
+  lost his/her social position compared to the family of origin. Children
+  get the social position of the father (or the mother for illegitimate
+  children) until the age of 20, thereafter they get social position from
+  their own occupations. Married women rarely get an independent
+  occupation, and they therefore get the social position of their
+  husbands.\footnote{For some presence periods, our rules have resulted in unknown
+  social position. We have updated these according to rules where we have
+  considered social positions at the presence periods surrounding the
+  period in question. In this study we have used a modified version of the
+  classification {\tt SOCPO} \citep{vdpm05}, representing a
+  hierarchical distribution in five levels of social power based on
+  occupational information. Due to the fact that the classification system
+  of occupations at DDB is not immediately transferable to SOCPO and that
+  information in the sources sometimes makes it difficult to designate the
+  correct SOCPO level, we have had to modify it somewhat.}
+
+\item[Marital status] Unmarried, married, widowed or divorced. Observed at the age of 50.
+
+\item[IMR at birth] This is an indicator of the general mortality level in the region at the time of of birth.
+
+%% \item[Place of residence] We only separate between the urban part and the
+%%   rest. Urban mortality was substantially higher in Sweden during the 18th
+%%   and 19th centuries. Mortality started to decline at a much faster pace in
+%%   towns and cities from the 1870 and in only a few decades the difference
+%%   was marginal. Depending on age group, the mortality rates had dropped to
+%%   the same levels in the 1920’s or the 1930’s. It has thus not been
+%%   necessary to include place characteristics in the analysis. 
+
+%% \item[Number of children] Really? This is calculated from the total sum of
+%%   biological children to the person. Biological children can be an
+%%   important intermediate variable for survival in old age. 
+
+\item[inUtero] Exposure to harvest failure during gestation. Time spent \emph{in
+    utero} during the period August 
+  1867--July 1868.
+
+
+\item[Infancy] Exposure to harvest failure during infancy. Time spent as an infant
+  during the period August 1867--July 1868.
+
+
+\item[Childhood] Exposure to harvest failure during early childhood. Time spent in
+  early childhood (ages one and two) during the period August 1867--July 1868. 
+
+
+%%\item[birthdate] Birthdate controls for possible trends in mortality for the age cohorts.
+%%During the period of our defined age cohort, there is
+%%  a secular decline both in infant and childhood mortality at the time we
+%%  follow them in childhood, and in adult and old age mortality when they
+%%  are old.
+\item[birthYear] Year of birth. 
+\end{description}
+
+\section{The Skellefteå region and famines}
+
+The Skellefteå region, surrounding Skellefte River, was originally one
+parish that became split up into several parishes during the 19th century,
+three parishes in 1850, four in 1900 and nine in 1950. In the 18th and 19th
+century, Skellefteå parish was one of the largest Swedish parishes both in
+geographical and population size. The 19th century economy was mainly based
+on agricultural production with some small industrial activities, for
+example at the foundry in Ytterstfors. It was not until the 20th century
+that industrialization started, and some mines started there, as well as
+heavy industries. Nowadays Skellefteå can rather be characterized as a
+traditional industrial district. The industrial development also brought
+migration to the district. The most inhabited part, what became Skellefteå
+town, got its city rights in 1845. The town was however very small during
+the 19th century with less than thousand inhabitants. When the district
+started to industrialize, population size increased rapidly during the
+early parts of the 20th century. Mortality was comparatively low, but
+fertility was high. The Princeton project showed that the fertility
+transition started not until the 1910’s in the district. Large families
+were comparatively common well into the 20th century \citep{coa86}. 
+
+The 19th century saw several periods of crisis in the Skellefteå
+region. One was caused by the Finnish war 1808-09 when Russian troops
+marched through the district and put heavy demands on the local
+population. Mortality was very high. Harvest failures occurred at several
+times. One critical period was during the 1830’s when several years in a
+row were characterized by harvest failures. The problems of that period
+forced the local authorities to arrange for savings in the so called
+“sockenmagasin” (district granaries).  
+
+The year 1867 has gone into Swedish history as the last big famine year or
+``det stora nödåret'' in Swedish. The population of Skellefteå were already
+vulnerable due to some bad years earlier in the 1860s that made many
+having large debts \citep{fah56}. Harvest was bad in 1864 and that of the following year has
+been described as a crop failure. Furthermore, other parts of the local
+economy suffered during these years. They were thus already living
+in precarious conditions, maybe on the edge of starvation. A fairly warm February 1867 was followed by very cold weather that continued well into the spring. Ice remained on the lakes into
+midsummer in late June, and the sea transportation between Skellefteå and
+southern Sweden was not taken up until 17th of June. Food situation was
+problematic already at that time. Bark bread and other emergency food had
+to be used and beggars started to be seen on the roads. According to some
+statements, seed was missing in parts of the in-lands in Skellefteå
+region. But the problems got worse. The first, although mild, frost nights
+came already in July. In August and September several frost nights
+occurred, totally ruining the harvest. A difficult winter and spring
+followed. Measures were taken to rectify the most catastrophic
+conditions. Relief were sent and public work were offered for those most in
+need. There were however many conflicts on how assistance and relief should
+be organized. The elite, both at local as well as national level, were
+unwilling to help the starving population without anything in return. Help
+could be given as loans or as offering work. The difficult winter
+communication also hindered support to come. It was thus a relief that
+spring was fairly early in 1868 and that the following harvest was perhaps not abundant but at least no failure. The
+effects of the previous crisis still lingered for some time, although. 
+
+Northern Sweden were less reliant on crops compared to southern 
+Sweden. Agriculture was based on animal husbandry, but there were also good opportunities for hunting
+and fishing. Poor people did however have less
+access to alternative resources due to the fact that they were the first to lose their jobs during crises and lacked rights to fish and hunt. Picking berries could alleviate the situation. The period March to April was the
+worst. Cattle were kept indoors on a small diet during winter, leading to minimal milk production. From late May or early June, the food situation
+improved when the cattle were kept to graze in the forests. At that time of the year sea transportation
+opened up and later berries and vegetables became available. 
+
+
+
+\section{Demographic background information}
+First we look at the immediate demographic effects of the harvest
+failure by presenting the development of fertility, migration ant mortality and mortality during the
+period 1851--1880. Notice that the results are presented in harvest years representing the events and rates from July one year to June the next. The figures clearly illustrate that the harvest failure led to a typical subsistance crisis.
+\subsection{Births and migration}
+ Figure~\ref{fig:births} shows the number of births during the studied period. 
+<<births,fig.cap='Number of live births per year (1 July to 30 June next year).',fig.scap='Number of live births per year.',cache=TRUE>>=
+times <- seq(1853.5, 1880.5, by = 1)
+x <- with(obs[obs$birthdate > 1853.5 & 
+              obs$birthdate < 1880.5 & 
+              obs$lopnr == 1, ], 
+          cut(birthdate, times)
+          )
+y <- as.numeric(table(x))
+plot(times[-1], y, type = "b", ylab = "No. of births", ylim = c(0, max(y)),
+     xlab = "Calendar time", axes = FALSE)
+axis(1, at = c(1854.5, 1869.5, 1874.5, 1880.5), 
+     labels = c("1853-54", "1867-68", "1872-73", "1879-80"))
+axis(2)
+box()
+abline(h = 0)
+@ 
+There was a small increase in births from the early 1850’s until
+1866, mirroring the general increase in population at this time. Number of
+births dropped however radically first in 1866--67 and then in 1867--68, i.e. the year following the bad
+harvest in 1867. It went down by approximately 40 per cent from the previous levels. Such a sharp decline is a clear indication of a local subsistence
+crisis, as families avoided or postponed the
+birth of another child due to the economic situation. The decline started however already before the crisis year. The recovery took place quite fast after the bad harvest year, although the
+number of births were still somewhat lower than pre-crisis period during the next following years, indicating that uncertainties due
+to the famine still remained. Thereafter, the number of births got back to
+“normal” levels. In no other year of harvest failure
+during this period, do we observe a similar strong effect on fertility, which clearly illustrates that the harvest failure of 1867 struck harder than the others. 
+
+Another indicator of the hardship caused by the harvest failure is the high migration rates during the year of the crisis and the following year (Figure~\ref{fig:migfig}).
+<<migfig,fig.cap='Out-migration rate in ages 20-50 by year (1 July to 30 June next year.',cache=TRUE>>=
+dates <- (1853:1880) + 0.5
+x <- with(obs, perstat(cbind(enter, exit, sluttyp %in% 4:6, birthdate), period = dates, age = c(20, 50)))
+plot(dates[-1] - 0.5, x$intensity, ylim = c(0, max(x$intensity)), type = "b", xlab = "Year", ylab = "Out-migration rate", axes = FALSE)
+axis(1, at = c(1854, 1868, 1876), labels = c("1853-54", "1867-68", "1875-76"))
+axis(2)
+box()
+@
+Migration increased by almost 50 per cent compared to previous years. This confirms the statements from contemporary written sources that people went on the roads and many moved from their home villages in order to search for better opportunities to make a living or to get help.
+
+\subsection{Mortality in ages 0, 1--2 and 3--14}
+
+Figure~\ref{fig:infmort} %, \ref{fig:age12}, and \ref{fig:age314} show
+  shows mortality rates in different age groups for the same 
+period. The harvest failure had a strong effect on infant mortality, which
+almost doubled from the harvest year 1866--67 to 1867--68. Some marginal after-effects are apparent during 1868 and 1869, but the infant mortality rate returned almost to the ordinary levels. Other age groups of children were however less affected by the crisis when it comes to survival chances. There is an increase in childhood mortality in
+1867, but that peak is marginal in comparison with the one for infant
+mortality. The peak years of childhood mortality are instead during the late 1850s and
+1872--73 when large epidemics of scarlet fever ravaged. The time series of
+childhood mortality primarily reflect recurrent epidemics of
+infectious childhood diseases (scarlet fever, diphtheria, measles, whooping
+cough, smallpox). This reminds us about the possibility of other potential
+long-term influences during our studied period. 
+
+
+  
+
+<<infmort,fig.cap='Infant, early childhood (1-2 years), and  later childhood (3-14 years) mortality. One-year averages centered around winters.',fig.scap='Infant, early childhood, and later childhood mortality.',cache=TRUE>>=
+x <-with(obs, perstat(cbind(enter, exit, event, birthdate), 
+                      (1853:1880) + 0.5, c(0, 1)))$intensity * 1000 
+y <-with(obs, perstat(cbind(enter, exit, event, birthdate), 
+                      (1853:1880) + 0.5, c(1, 3)))$intensity * 1000
+z <-with(obs, perstat(cbind(enter, exit, event, birthdate), 
+                      (1853:1880) + 0.5, c(3, 15)))$intensity * 1000
+plot((1853:1879)+0.5, x, type = "b", xlab = "Calendar time", 
+     ylab = "Deaths per 1000", ##
+     ylim = c(0, max(x)), 
+     ##ylim = c(0, 6),
+     axes = FALSE)
+axis(1, at = c(1853.5, 1868.5, 1873.5, 1879.5), 
+     labels = c("1853-54", "1867-68", "1872-73", "1879-80"))
+axis(2)
+abline(h = 0)
+box()
+lines((1853:1879) + 0.5, y, type = "b", col = "blue", lty = 2)
+lines((1853:1879) + 0.5, z, type = "b", col = "red", lty = 3)
+legend("topleft", legend = c("Infants", "Ages 1-2", "Ages 3-14"), 
+       col = c("black", "blue", "red"), lty = c(1, 2, 3))
+@ 
+
+\subsection{Mortality in the ages 20--39, 40--59 and 60--79}
+
+%%Mortality risks increased however substantially among the adult %%population during both 1868 and 1869 and the elderly during
+%%1867--1869. 
+The famine 1867--68 struck hard on old age as well as on adult mortality that increased to about the double of the surrounding years, see Figure~\ref{fig:senmort}. 
+% Maybe somewhat surprising is the "return to normal" already the next winter, % 1868--69, although the Swedish harvest in the summer 1868 also has been %described as a failure\footnote{Enligt Wikipedia så: 
+%"År 1868 var betydligt torrare men detta ledde obönhörligen till missväxt då %torkan blev för svår. Folket svalt, djuren likaså. På grund av undernäring och %sjukdomar orsakade av denna svält så var döden ett bekant inslag i många %familjer." (Tycks inte gälla Skellefteå, min anm.)}. 
+%This was however not the case in Skellefteå.
+
+Corresponding to the effect on infants but not on children 1--4 years, those in old age were thus directly affected already during
+the year of harvest failure. An increase can be seen already before the harvest year 1867--68. The harsh winter of 1866--67 and the inhibited sea communications during spring 1867 possibly explain this. The sharp increase for the oldest age could be weather-related
+deaths where the frailest faced the largest risks, something that is well-documented in many studies \citep {oudi13}.
+
+<<senmort,fig.cap='Mortality in ages 20--39, 40--59, and 60--79. One-year averages centered around winters.',fig.scap='Mortality in ages 20--39, 40--59, and 60--69.',cache=TRUE>>=
+x <-with(obs, perstat(cbind(enter, exit, event, birthdate), 
+                      (1853:1880) + 0.5, c(20, 40)))$intensity * 1000 
+y <-with(obs, perstat(cbind(enter, exit, event, birthdate), 
+                      (1853:1880) + 0.5, c(40, 60)))$intensity * 1000
+z <-with(obs, perstat(cbind(enter, exit, event, birthdate), 
+                      (1853:1880) + 0.5, c(60, 80)))$intensity * 1000
+plot((1853:1879)+0.5, x, type = "b", xlab = "Calendar time", 
+     ylab = "Deaths per 1000", ylim = c(0, max(z)), axes = FALSE)
+axis(1, at = c(1853.5, 1868.5, 1873.5, 1879.5), 
+     labels = c("1853-54", "1867-68", "1872-73", "1879-80"))
+axis(2)
+abline(h = 0)
+box()
+lines((1853:1879)+0.5, y, type = "b", col = "blue", lty = 2)
+lines((1853:1879)+0.5, z, type = "b", col = "red", lty = 3)
+legend("topleft", legend = c("20-39", "40-59", "60-79"), 
+       col = c("black", "blue", "red"), lty = c(1, 2, 3))
+@ 
+
+
+%% <<youthmort,fig.cap='Mortality in ages 3-14.'>>=
+%% plot((1853:1879)+0.5, z, type = "b", xlab = "Calendar time", 
+%%      ylab = "Deaths per 1000", ylim = c(0, max(z)), axes = FALSE)
+%% axis(1, at = c(1853.5, 1868.5, 1873.5, 1879.5), 
+%%      labels = c("1853-54", "1867-68", "1872-73",  "1879-80"))
+%% axis(2)
+%% abline(h = 0)
+%% box()
+%% @ 
+
+%% \begin{knitrout}
+%% \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}[]
+
+%% \includegraphics[width=\maxwidth]{figs/prel-age01} \caption[Infant
+%% mortality]{Annual infant mortality.\label{fig:age01}}
+%% \end{figure}
+
+
+%% \end{knitrout}
+
+
+%% \begin{knitrout}
+%% \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}[]
+
+%% \includegraphics[width=\maxwidth]{figs/prel-age12} \caption[Mortality in
+%% ages 1--2]{Annual mortality in ages 1--2.\label{fig:age12}}
+%% \end{figure}
+
+
+%% \end{knitrout}
+
+
+%% \begin{knitrout}
+%% \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}[]
+
+%% \includegraphics[width=\maxwidth]{figs/prel-age314} \caption[Mortality in
+%% ages 3--14]{Annual mortality in ages 3--14.\label{fig:age314}}
+%% \end{figure}
+
+
+%% \end{knitrout}
+
+
+%% \begin{knitrout}
+%% \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}[]
+
+%% \includegraphics[width=\maxwidth]{figs/prel-imr_per} \caption[Infants and ages 1--2, 3--14]{Infants and ages 1--2, 3--14.\label{fig:age0014}}
+%% \end{figure}
+
+
+%% \end{knitrout}
+
+%% \subsection{Mortality in ages 40--59 and 60--79}
+
+%% Figure~\ref{fig:age4079} shows the period yearly mortality in the ages
+%% 40--59 and 60--79.
+
+%% \begin{knitrout}
+%% \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}[]
+
+%% \includegraphics[width=\maxwidth]{figs/prel-age4079} \caption[Ages 40-59 and 60-79]{Ages 40-59 and 60-79.\label{fig:age4079}}
+%% \end{figure}
+
+
+%% \end{knitrout}
+
+%% Figure\ref{fig:oldmort} shows the cohort mortality in old age according to birth
+%% year. The deaths occurred from the 1910’s to the 1950’s. There is no clear
+%% trend in the mortality rates for the different birth cohorts during this
+%% time. This is in line with what we know from the general development in old
+%% age mortality in Sweden during the first half of the 20th century. In
+%% contrast to other age groups, mortality among elderly declined only
+%% marginally.% (Edvinsson 2012). 
+
+%% The cohort mortality in old age (60--69 and 70--79 respectively) for those
+%% born 1851 to 1880 (Figure~\ref{fig:oldmort}) provides a first indication of possible
+%% long-term effects of the harvest failure. We do not see any clear signs of
+%% excess mortality for those being children or being conceived during the
+%% hard year(s). There is a peak in mortality 60--69 years for those being born
+%% 1868, i.e. experiencing the bad harvest year during gestation or early
+%% infancy, but other peaks during the investigated period is equally high or
+%% even higher. We may also see an indication of higher mortality in the age
+%% group 70--79 for those being in their early childhood during the
+%% famine. More thorough analyses are however required in order to estimate
+%% the possible impact. 
+
+%% See Figure~\ref{fig:oldmort}.
+
+
+%% \begin{knitrout}
+%% \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}[]
+
+%% \includegraphics[width=\maxwidth]{figs/prel-old} \caption[Old age mortality
+%% by birth year]{Old age mortality by birth year (cohort data).\label{fig:oldmort}}
+%% \end{figure}
+
+
+%% \end{knitrout}
+
+%% %% \subsection{Immediate effect on mortality of the time period May 1867 -- April 1869} 
+
+%% Here we look at our sample, born 1853--1880.
+%% We divide the two-year period into  one-year periods around the years of
+%% the Age12. We find that the most critical period is 1 July 1868 -- 30 June
+%% 1869, that is, starting one year \emph{after} the big harvest failure
+%% summer 1867. 
+%% <<twoscare>>=
+%% source("R/get.periods.R")
+%% ol <- get.periods(dat = old) 
+%% @ 
+%% \subsubsection{Infant mortality}
+
+%% First we look at infant mortality, see Table~\ref{tab:infmor}
+%% <<infmor,results='asis'>>=
+%% ol1 <- age.window(ol, c(0, 1))
+%% fit <- coxreg(Surv(enter, exit, event) ~ sex + year + birthdate, data = ol1)
+%% ltx(fit,caption='Infant mortality, Cox regression.', label = 'tab:infmor')
+%% @ 
+%% The overall trend in infant mortality is that it is decreasing with time,
+%% but between July 1, 1868 and June 30, 1869, infant mortality is extremely high. 
+
+%% \subsubsection{Child mortality, ages 1--3}
+
+%% Then we look at child mortality, ages 1--3, see Table~\ref{tab:chimor}
+%% <<chimor,results='asis'>>=
+%% ol1 <- age.window(ol, c(1, 4))
+%% fit <- coxreg(Surv(enter, exit, event) ~ sex + year + birthdate, data = ol1)
+%% ltx(fit,caption='Mortality in ages 1--3, Cox regression.', label = 'tab:chimor')
+%% @ 
+%% The overall trend in childhood mortality is that it is decreasing with time,
+%% but between July 1, 1868 and June 30, 1869 it is high. 
+
+%% \subsubsection{Child mortality, ages 4--7}
+
+%% Then we look at child mortality, ages 4--7, see Table~\ref{tab:chimor2}
+%% <<chimor2,results='asis'>>=
+%% ol1 <- age.window(ol, c(4, 8))
+%% ol1$exit <- ifelse(ol1$exit <= ol1$enter, ol1$enter + 0.02, ol1$exit)
+%% fit <- coxreg(Surv(enter, exit, event) ~ sex + year + birthdate, data = ol1)
+%% ltx(fit,caption='Mortality in ages 4--7, Cox regression.', label = 'tab:chimor2')
+%% @ 
+%% The overall trend in childhood mortality is that it is decreasing with time,
+%% but between July 1, 1868 and June 30, 1869 it is high. 
+
+%% \subsubsection{Child mortality, ages 8--14}
+
+%% Then we look at child mortality, ages 8--14, see Table~\ref{tab:chimor3}
+%% <<chimor3,results='asis'>>=
+%% ol1 <- age.window(ol, c(8, 15))
+%% fit <- coxreg(Surv(enter, exit, event) ~ sex + year + birthdate, data = ol1)
+%% ltx(fit,caption='Child mortality 8--14, Cox regression.', label = 'tab:chimor3')
+%% @ 
+%% The overall trend in childhood mortality is that it is decreasing with time,
+%% but between July 1, 1868 and June 30, 1869 it is high.
+
+\section{Old age mortality}
+
+The ultimate goal of this investigation is to compare the effect of the
+1867--68 famine on old age mortality. Two preliminary steps are necessary
+to take: First, the exposure of the famine must be quantified, and second,
+the intermediate effect of the famine on mortality in younger ages must be
+evaluated as a background for what is happening in old age. 
+
+
+\subsection{Quantifying exposure}
+
+%%In the first step, 
+%%the general form of the effect of the famine
+%%on old age mortality is investigated. 
+%%It turns out that exposure during the ages 1 and 2 years of age had the largest impact on old age mortality, see Table~\ref{tab:t13}, where the variable {\tt t13} is the {\emph{time of
+%%    exposure} during the ages 1-2, {\tt Infancy} is the time of exposure the first year of life, and {\tt inUtero} in utero. Birth date, indicating a possible trend in mortality, had no effect and has therefore been excluded in the presented model. Consequently, our results do not support the hypotheses that exposure of bad nutrition in utero or during infancy leads to increased mortality in old age. Instead, exposure during the second and third year seems to be more crucial for all-cause mortality. In the following, we concentrate on this age group.
+
+%When analysing the exposure during the second and third year, we have excluded all births from January 1 to May 25 from the
+%analysis, depending on the fact that the exposure period does not cover
+%these dates. 
+
+%<<t13cut,results = 'asis'>>=
+%fit <- aftreg(Surv(enter, exit, event) ~ Age12 + sex, data = old1, 
+%              dist = "gompertz", param = "lifeExp", id = id) 
+%ltx(fit, caption = "Total mortality by Age12, AFT regression with the Gompertz %distribution.", 
+%    label = "tab:t13cut")
+%@ 
+%The hazard functions and a categorisation of exposure is illustrated graphically %in Figure~\ref{fig:early2woman},
+%<<t13cutgr,fig.cap="Hazard functions of survival beyond 60 for the subsets defined by the levels of 'Age12'.">>=
+%#par(mfrow = c(1, 2))
+%fit <- phreg(Surv(enter, exit, event) ~ strata(t13cut), data = old1, 
+%              dist = "gompertz")
+%plot(fit, fn = "haz", main = '', xlab = "Years after age 60", printLegend = FALSE, col = 1:2, lty = 1:2)
+%legend("topleft", legend = c("No exposure", "Exposure"), lty = 1:2, cex = 0.75, col = 1:2)
+%@
+\noindent Figure~\ref{fig:Age12} shows how the covariates {\tt inUtero}, {\tt Infancy}, and {\tt Childhood} 
+vary with birthdate. 
+<<Age12,fig.cap="The variables 'inUtero', 'Infancy', and 'Childhood' as  functions of the variable 'birthdate'.", cache=TRUE>>=
+old1 <- old1[order(old1$birthdate), ]
+with(old1, plot(birthdate, inUtero, type = "l", xlab = "birthdate", ylab = "Years", 
+     xlim = c(1864, 1870), axes = FALSE, ylim = c(0, 2)))
+axis(2, at = c(0, 0.5, 1))
+axis(1, at = c(1864, tillTid(datum1), tillTid(datum2), 1870), labels = c(18640101, datum1, datum2, 18691231))
+box()
+with(old1, lines(birthdate, Infancy, lty = 2, col = 2))
+with(old1, lines(birthdate, Childhood, lty = 4, col = 4))
+legend("topleft", legend = c("inUtero", "Infancy", "Childhood"), lty = c(1, 2, 4), col = c(1, 2, 4))
+##abline(v = 1866.4, lty = 2)
+#lines(c(1866.4, 1866.4), c(1, 1.7), lty = 2)
+##abline(v = 1867, lty = 2)
+#lines(c(1867, 1867), c(1, 1.7), lty = 2)
+##abline(h = 1.7)
+#lines(c(1863.5, 1867), c(1.7, 1.7), lty = 2)
+#lines(c(1866.4, 1866.4), c(0, 1), col = 2)
+#lines(c(1867, 1867), c(0, 1), col = 2)
+#lines(c(1866.4, 1867), c(1, 1), col = 2)
+##with(old1, lines(birthdate, Age12, lty = 1, col = 2))
+#abline(h = 0)
+#par(mfrow=c(1, 1))
+@ 
+%From %both Table~\ref{tab:t13cut} and 
+%Figure~\ref{fig:t13cutgr} we conclude
+%that we can simplify the forthcoming analyses by joining the classes {\tt No}
+%and {\tt Low}. Furthermore, since the {\tt Age12} period only includes
+%births during summer, fall, and early winter (from May 26 to December 31),
+%\emph{all} individuals with births between January 1 and May 25 are removed from
+%the data set. This means, among other things, that the number of events and the number of individuals in the analyses below will be %reduced by around 40 per cent. At the same time a covariate {\tt season} is introduced. It
+%categorizes {\tt birthdate} into the three categories just mentioned. 
+%See Table~\ref{tab:seasonchoose} for the results, and notice the very strong impact of the indicator {\tt Age12}. (fast det är väl %egentligen ingen större skillnad mot tabell 1.) 
+%<<seasonchoose,results='asis'>>=
+%fit <- aftreg(Surv(enter, exit, event) ~ Age12 + sex, data = old1, dist = "gompertz", param = "lifeExp")
+%ltx(fit, caption="AFT regression with the indicator of high exposure in ages 1 and 2, Gompertz distribution.",label="tab:seasonchoose")
+%@ 
+
+%Some words of caution is in place. In this and the following tables, the $p$-value is too optimistic because of this choice of covariate; %we were led by data in choosing it, and that is not reflected in the tables. As a rule of thumb, triple all $p$-values corresponding to %{\tt Age12}!
+% , see Table~\ref{tab:joinclass}.
+%<<joinclass,results='asis'>>=
+%##levels(obs$t13cut) <- c("Low", "Low", "High")
+%old1$t13cut[old1$t13cut == "No"] <- "Low"
+%old1$t13cut <- factor(old1$t13cut)
+%fit <- aftreg(Surv(enter, exit, event) ~ t13cut, data = old1, 
+%              dist = "gompertz", param = "lifeExp", id = id) 
+%ltx(fit, caption = "Total mortality by Age12, two groups, AFT %regression.", 
+%    label = "tab:joinclass")
+%@ 
+%% A first analysis of the effect of the Age12 years on old age mortality is
+%% shown in Table~\ref{tab:coxwoman} and Table~\ref{tab:coxman}. The analysis
+%% is performed with Cox regression. 
+%% The ``critical period'' is taken as 1867.5 -- 1868.5. The variable {\tt Age12} is an indicator for being present in the parish during the period from July 1, 1867 to June 30, 1869, and the variable {\tt t13} is time spent (in years) in the critical period in the critical age; both these variables are considered as exposure. All the analyses are performed for women and men separately, for obvious reasons. First results for women, see Table~\ref{tab:coxwoman}.
+
+%% <<coxwoman,results='asis'>>=
+%% woman <- old[old1$sex == "woman", ]
+%% fit.w <- coxreg(Surv(enter, exit, event) ~ t13 + Age12 + socpo.birth,
+%%               ##id = id, dist = 'gompertz', param = 'lifeExp', 
+%%               data = woman)
+%% dr <- drop1(fit.w, test = "Chisq")
+%% ltx(fit.w, dr = dr, caption="Female old1 age mortality, 60--90 years of age. Cox regression.", label = "tab:coxwoman")
+%% @ 
+%% Then men, see Table~\ref{tab:coxman}.
+%% <<coxman,results='asis'>>=
+%% man <- old1[old1$sex == "man", ]
+%% fit.m <- coxreg(Surv(enter, exit, event) ~ t13 + Age12 + socpo.birth, 
+%%    ##id = id, dist = 'gompertz', param = 'lifeExp', 
+%%    data = man)
+%% dr <- drop1(fit.m, test = "Chisq")
+%% ltx(fit.m, dr = dr, caption="Male old age mortality, 60--90 years of age. Cox regression.", label = "tab:coxman")
+%% @ 
+
+%% Nothing much to see, we remove the variable {\tt Age12} in both cases.
+
+%% <<coxwoman2,results='asis'>>=
+%% fit.w2 <- coxreg(Surv(enter, exit, event) ~ t13 + socpo.birth,
+%%               ##id = id, dist = 'gompertz', param = 'lifeExp', 
+%%               data = woman)
+%% dr <- drop1(fit.w2, test = "Chisq")
+%% ltx(fit.w2, dr = dr, caption="Female old age mortality, 60--90 years of age. Cox regression.", label = "tab:coxwoman2")
+%% @ 
+%% Then for men.
+
+%% <<coxman2,results='asis'>>=
+%% fit.m2 <- coxreg(Surv(enter, exit, event) ~ t13 + socpo.birth, 
+%%    ##id = id, dist = 'gompertz', param = 'lifeExp', 
+%%    data = man)
+%% dr <- drop1(fit.m2, test = "Chisq")
+%% ltx(fit.m2, dr = dr, caption="Male old age mortality, 60--90 years of age. Cox regression.", label = "tab:coxman2")
+%% @ 
+
+%% Let us see how it works with {\tt Age12} instead of {\tt t13}.
+
+%% <<coxwoman3,results='asis'>>=
+%% fit.w3 <- coxreg(Surv(enter, exit, event) ~ Age12 + socpo.birth,
+%%               ##id = id, dist = 'gompertz', param = 'lifeExp', 
+%%               data = woman)
+%% dr <- drop1(fit.w3, test = "Chisq")
+%% ltx(fit.w3, dr = dr, caption="Female old age mortality, 60--90 years of age. Cox regression.", label = "tab:coxwoman3")
+%% @ 
+%% Then for men.
+
+%% <<coxman3,results='asis'>>=
+%% fit.m3 <- coxreg(Surv(enter, exit, event) ~ Age12 + socpo.birth, 
+%%    ##id = id, dist = 'gompertz', param = 'lifeExp', 
+%%    data = man)
+%% dr <- drop1(fit.m3, test = "Chisq")
+%% ltx(fit.m3, dr = dr, caption="Male old age mortality, 60--90 years of age. Cox regression.", label = "tab:coxman3")
+%% @ 
+%Note that, in Figure~\ref{fig:t13cutgr}, the curves are estimated
+%\emph{hazard} functions under the assumption that survival follows a
+%\emph{Gompertz} distribution. 
+
+\subsection{Mortality differences before the age of 60}
+
+In this section, we follow the mortality experience for our cohorts until the age in focus in this paper. It is important to identify possible selection processes before old age. 
+
+<<child1woman,fig.cap='Mortality in ages 0--20 by exposure in more than three months in ages 1 and 2. Cumulative hazards.',fig.scap='Mortality in ages 0--20 by exposure.', cache=TRUE>>=
+par(mfrow = c(1, 2))
+o020 <- age.window(old.old, c(0, 60))
+##o020$Age12 <- factor(o020$Age12, labels = c("Not exposed", "Exposed"))
+fit.w <- coxreg(Surv(enter, exit, event) ~ strata(Childhood > t13cut), data = o020[o020$sex == "woman", ], y = TRUE)
+plot(fit.w$hazards, fn = "cum", xlab = "Age", col = 1:2, xlim = c(0, 20), printLegend = FALSE, main = "Women", ylab = "")
+legend("topleft", legend = c("Not exposed", "Exposed"), lty = 1:2, col = 1:2)
+fit.m <- coxreg(Surv(enter, exit, event) ~ strata(Childhood > t13cut), data = o020[o020$sex == "man", ])
+plot(fit.m$hazards, fn = "cum", xlab = "Age", col = 1:2, xlim = c(0, 20), printLegend = FALSE, main = "Men", ylab = "")
+legend("topleft", legend = c("Not exposed", "Exposed"), lty = 1:2, col = 1:2)
+@
+
+Crude pictures of the mortality in ages 20--60 by {\tt Childhood}, separately for women and men, are shown in Figure~\ref{fig:early1woman}.
+<<early1woman,fig.cap='Mortality in ages 20--60 by exposure in more than three months in ages 1 and 2. Cumulative hazards.', fig.scap='Mortality in ages 20--60 by exposure.', fig.height = 3.5,cache=TRUE>>=
+par(mfrow = c(1, 2))
+o2040 <- age.window(old.old, c(0, 60))
+##o2040$Age12 <- factor(o2040$Age12, labels = c("Not exposed", "Exposed"))
+#with(o2040[o2040$sex == "woman", ], plot(Surv(enter, exit, event), strata = Age12, main = 'Women', xlab = 'Age'))
+fit <- coxreg(Surv(enter, exit, event) ~ strata(Childhood > t13cut), data = o2040[o2040$sex == "woman", ])
+plot(fit$hazards, fn = "cum", xlab = "Age", col = 1:2, xlim = c(20, 60), printLegend = FALSE, main = "Women",ylab="")
+legend("bottomright", legend = c("Not exposed", "Exposed"), lty = 1:2, col = 1:2)
+fit <- coxreg(Surv(enter, exit, event) ~ strata(Childhood > t13cut), data = o2040[o2040$sex == "man", ])
+plot(fit$hazards, fn = "cum", xlab = "Age", col = 1:2, xlim = c(20, 60), printLegend = FALSE, main = "Men",ylab="")
+legend("bottomright", legend = c("Not exposed", "Exposed"), lty = 1:2, col = 1:2)
+par(mfrow = c(1, 1))
+@ 
+%<<early1man,fig.cap='Male mortality in ages 0--60'>>=
+%with(o2040[o2040$sex == "man", ], plot(Surv(enter, exit, event), strata = Age12, main = 'Men', xlab = 'Age'))
+%#legend("bottomright", legend = c("No Age12", "Age12"), lty = c(1, 2))
+%par(mfrow = c(1, 1))
+%@ 
+The patterns are similar for women and men; the exposed more than three months              in {\tt Childhood} have high
+mortality in the ages 5--8 both for females and males, corresponding to the
+years 1871--75. Those experiencing the harvest failure in early childhood happened to be in this age during the ravaging epidemics of scarlet fever in the early 1870's. This mortality peak for the exposed had thus probably nothing to do with the harvest failure 1867--68. Exposed 
+females have an increased mortality around age 40, while exposed men do not
+seem to differ much from unexposed men after age 8 in this respect. 
+
+%%The ages 50--90 are next on the agenda, see Figure~\ref{fig:early2woman}.
+
+%%<<early2woman,fig.cap='Mortality in ages 50--90, females (left) and males (right). Cumulative %%hazards', fig.height = 3.5>>=
+%%par(mfrow = c(1, 2))
+%%o5090 <- age.window(old.old, c(50, 90))
+%%o5090$Age12 <- factor(o5090$Age12, labels = c("No Age12", "Age12"))
+%%with(o5090[o5090$sex == "woman", ], plot(Surv(enter, exit, event), strata = Age12, xlab = "Age", %%main = '', printLegend = FALSE))
+%%legend("topleft", legend = c("No Age12", "Age12"), lty = 1:2)
+%%#@ 
+%%#and Figure~\ref{fig:early2man}.
+%%#<<early2man,fig.cap='Male mortality in ages 50--90.'>>=
+%%with(o5090[o5090$sex == "man", ], plot(Surv(enter, exit, event), strata = Age12, xlab = "Age", main %%= '', printLegend = FALSE))
+%%legend("topleft", legend = c("No Age12", "Age12"), lty = 1:2)
+%%par(mfrow = c(1, 1))
+%%@ 
+%%There seems to be an effect of exposure setting at ages slightly after 70,
+%%which corresponds to the late 1930s for the exposed, that is, the years
+%%immediately before the start of World War II. 
+
+
+\subsection{Old age mortality, all causes}
+
+%%In the first step, the general form of the effect of the famine
+%%on old age mortality is investigated. 
+
+
+When we now turn to the long-term effects of the harvest failure, we start by comparing exposed and unexposed for the ages 50--90, see Figure~\ref{fig:early2woman}. We only present the results for exposure during early childhood as motivated by the analysis below.
+
+<<early2woman,fig.cap='Mortality in ages 50--90 by exposure in more than three months in ages 1 and 2. Gompertz hazard functions.', fig.scap='Mortality in ages 50--90 by exposure.',fig.height = 3.5,cache=TRUE>>=
+par(mfrow = c(1, 2))
+o5090 <- age.window(old.old, c(50, 90))
+##o5090$Age12 <- factor(o5090$Age12, labels = c("Not exposed", "Exposed"))
+fit <- phreg(Surv(enter-50, exit-50, event) ~ strata(Childhood > t13cut), data = o5090[o5090$sex == "woman", ], dist = "gompertz") # OBS!! Fusk; kolla 'gompertz Warnings'!
+plot(fit, fn = "haz", main = "Women", printLegend = FALSE, col = 1:2, axes = FALSE, xlab = "Age")
+axis(1, at = c(0, 10, 20, 30, 40), labels = c(50, 60, 70, 80, 90))
+axis(2)
+box()
+legend("topleft", legend = c("Not exposed", "Exposed"), lty = 1:2)
+abline(h = 0)
+#with(o5090[o5090$sex == "woman", ], plot(Surv(enter, exit, event), strata = Age12, xlab = "Age", main = '', printLegend = FALSE))
+#legend("topleft", legend = c("No Age12", "Age12"), lty = 1:2)
+#@ 
+#and Figure~\ref{fig:early2man}.
+#<<early2man,fig.cap='Male mortality in ages 50--90.'>>=
+fit <- phreg(Surv(enter-50, exit-50, event) ~ strata(Childhood > t13cut), data = o5090[o5090$sex == "man", ], dist = "gompertz")
+plot(fit, fn = "haz", main = "Men", printLegend = FALSE, col = 1:2, axes = FALSE, xlab = "Age")
+axis(1, at = c(0, 10, 20, 30, 40), labels = c(50, 60, 70, 80, 90))
+axis(2)
+box()
+#with(o5090[o5090$sex == "man", ], plot(Surv(enter, exit, event), strata = Age12, xlab = "Age", main = '', printLegend = FALSE))
+legend("topleft", legend = c("Not exposed", "Exposed"), lty = 1:2, col = 1:2)
+abline(h = 0)
+par(mfrow = c(1, 1))
+@ 
+%There seems to be an effect of exposure setting at ages slightly after 70,
+%which corresponds with the late 1930s for the exposed, that is, the years
+%immediately before the start of World War II. 
+
+It turns out that exposure during the ages 1 and 2 years of age had the largest impact on old age mortality, see Table~\ref{tab:t13}, where the variable {\tt Childhood} is the {\emph{time of
+    exposure} during the ages 1--2, {\tt Infancy} is the time of exposure the first year of life, and {\tt inUtero} in utero. Birth date, indicating a possible trend in mortality, had no effect and has therefore been excluded in the presented model. Consequently, our results do not support the hypotheses that exposure of bad nutrition in utero or during infancy leads to increased mortality in old age. Instead, exposure during the second and third year seems to be more crucial for all-cause mortality. In the following, we concentrate on this age group.
+
+<<t13,results = 'asis'>>=
+fit <- aftreg(Surv(enter, exit, event) ~ inUtero + Infancy + Childhood + sex + ses.birth + ses.50 + civst.50, data = old1, dist = "gompertz", param = "lifeExp") 
+ltx(fit, caption = "Total mortality by inUtero, Infancy, and Childhood, AFT regression with the Gompertz distribution.", 
+    label = "tab:t13")
+@ 
+
+%%    We have established the way we want to to measure exposure (the variable
+%%{\tt t13}). 
+In the following model, we have included separate analyses for women and men. Possible important baseline covariates are {\tt
+  ses.birth}, {\tt IMR at birth}, {\tt parity}, 
+%%{\tt birth season}, 
+{\tt birthh date} 
+and {\tt legitimacy}. However, it turns out that neither of them  has any substantial influence on old age mortality (not shown). See
+Tables~\ref{tab:totmorwoman} (women) and~\ref{tab:totmorman} (men) for the
+effect of Childhood exposure on old age mortality. 
+
+%We do not include intermediate covariates at this stage, thus aiming for
+%the \emph{total} effect of exposure on outcome. Later we will evaluate
+%possible indirect effects (mediation by intermediate covariates). See
+%later sections for a full analysis including intermediates.
+<<totmorwoman,results='asis'>>=
+save(old1, file = "old1.rda")
+fit <- aftreg(Surv(enter, exit, event) ~ inUtero + Infancy + Childhood + ses.birth + ses.50 + civst.50, data = old1[old1$sex == "woman", ], dist = "gompertz", param = "lifeExp", id = id)
+fitdr <- drop1(fit, test = "Chisq")
+ltx(fit, dr = fitdr, caption = 'Total mortality for women. AFT regression, Gompertz distribution.', 
+    label = 'tab:totmorwoman')
+@ 
+By dividing the analyses between sexes, we find a difference in how survival is associated with the harvest failure. The effect of the famine is stronger for women, almost reaching 5 per cent significance level. The baseline expected remaining life after 60 is 16.5 years. 
+
+<<totmorman,results='asis'>>=
+fit <- aftreg(Surv(enter, exit, event) ~ inUtero + Infancy + Childhood + ses.birth + ses.50 + civst.50, data = old1[old1$sex == "man", ], dist = "gompertz", param = "lifeExp", id = id)
+dr <- drop1(fit, test = "Chisq")
+ltx(fit, dr = dr, caption = 'Total mortality for men. AFT regression, Gompertz distribution.', 
+    label = 'tab:totmorman')
+@ 
+
+For men, the results go in the same direction, but the effect is much weaker and non-significant. We have no definite explanation why Childhood exposure had a stronger effect on women. We could speculate in possible selection effects being stronger for men, killing of the frail to a larger extent, alternatively female children being less well cared of. Previous studies have however not provided any support for widespread discrimination of girls in 19th century Sweden. 
+
+\subsection{Cardiovascular deaths}
+
+Previous studies of long-term effects of early life conditions have suggested that certain death causes are most relevant as outcomes. Cardiovascular diseases and diabetes are those best documented and with clear hypotheses on the pathways. These diseases are also those that Barker identifies as outcomes of conditions in utero. Cases of diabetes deaths were few in the Skellefteå region during the period we follow them and the cases are probably under-estimated as well. Cardiovascular diseases were however stated quite frequently in the registers, making it possible to analyse the effects on these diseases.
+
+Considering cause-specific mortality, only hazards are relevant, in order to avoid problems with dependence between causes. Therefore we switch to a proportional hazards (parametric) model, see
+Table~\ref{tab:t13card} for results. 
+<<t13card,results = 'asis'>>=
+require(eha)
+fit <- phreg(Surv(enter, exit, event == 1 & cause == 19) ~ inUtero + Infancy + Childhood + ses.birth + ses.50 + civst.50 + sex, data = old1, 
+              dist = "gompertz") 
+#fit
+ltx(fit, caption = "Cardiovascular mortality by inUtero, Infancy, and Childhood, PH regression with a Gompertz baseline distribution.", 
+    label = "tab:t13card")
+@ 
+
+%(HÄR SKULLE BEHÖVAS EN MOTSVARANDE TABELL SOM TABELL 1 ALLTSÅ EN REDOVISNING AV EFFEKTEN PÅ SAMTLIGA ÅLDERSGRUPPERS EXPONERINGAR)
+From Table~\ref{tab:t13card} it seems as if exposure in {\tt Infancy} may be of some importance, while {\tt inUtero} and {\tt Childhood} seems to mean nothing. Having experienced the famine during infancy increased the risks. 
+%We try a cutpoint approach to the two variables. (Behöver vi göra det? Verkar inte tillföra så mycket.)
+%<<cardmorwoman,results='asis'>>=
+%#old1$in_utero <- factor(old1$inUtero > 0.1, labels = c("Not exposed", "Exposed")) 
+%old2$Preg  <- factor(old2$preg > 0.1, labels = c("Not exposed", "Exposed"))
+%#old1$Infant <- factor(old1$Infancy > 0.1, labels = c("Not exposed", "Exposed")) 
+%old2$Preg  <- factor(old2$preg > 0.1, labels = c("Not exposed", "Exposed"))
+%fit <- phreg(Surv(enter, exit, event == 1 & cause == 19) ~ 
+%             Preg + Infant +
+%                sex, 
+%             data = old1, dist = "gompertz")
+%dr <- drop1(fit, test = "Chisq")
+%ltx(fit, dr = dr, caption = 'Cardiovascular mortality, PH regression with a Gompertz baseline distribution.', 
+%    label = 'tab:cardmorwoman')
+%@ 
+%The effect of exposure under mother's pregnancy is \emph{beneficial}, the old age mortality in cardiovascular disease is reduced by about %11\%, although not statistically significant! Being exposed as an infant, however, increases the risk by some 35\%.
+
+%<<cardmorman,results='asis'>>=
+%fit <- phreg(Surv(enter, exit, event == 1 & cause == 19) ~ Preg + Infant, 
+%             data = old1[old1$sex == "man", ], dist = "gompertz")
+%dr <- drop1(fit, test = "Chisq")
+%ltx(fit, dr = dr, caption = 'Cardiovascular mortality for men, PH regression with a Gompertz baseline distribution.', 
+%    label = 'tab:cardmorman')
+%@ 
+%For men, the result is still in the same direction but non-significant. (STÄMMER EJ ENLIGT TABELL.)
+
+
+% \section{Final analysis, including intermediates}
+% 
+% Since no indirect effects could be identified, we can include what we have 
+% in the final, simple analysis, where we have added possible confounders in
+% the model. In this case we have included {\tt ses.50}, i.e., social
+% position at what could be expected to be at the top of the occupational
+% career and marital status at the same age, thus before our analysis of
+% mortality start. We split it up on total mortality vs.\ 
+% cardiovascular mortality, and by sex. 
+% %%Furthermore, our tables only refer to all-cause mortality
+% 
+% \subsection{Total mortality}
+% 
+% We start with the results for women, see Table~\ref{tab:fintotwoman}
+% <<fintotwoman,results='asis'>>=
+% fit.tot <- aftreg(Surv(enter, exit, event) ~ inUtero + Childhood + ses.50 + civst.50, 
+%               data = old1[old1$sex == "woman", ], dist = "gompertz", param = "lifeExp")
+% dr <- drop1(fit.tot, test = "Chisq")
+% ltx(fit.tot, dr = dr, caption = 'Total mortality for women, including intermediate covariates. AFT regression with the Gompertz baseline distribution.', 
+%     label = 'tab:fintotwoman')
+% @
+% The analysis indicate that marital status had some impact on survival, but
+% not that strong. Perhaps a little surprisingly, previously married (mostly
+% widowed) women experienced the longest lives, while married and ubmarried
+% women did not differ much. Being married is usually an advantage, but this
+% advantage is however less strong for women, something that this result
+% illustrate. Social position have no verified importance at all, a result
+% being in line with a Swedish study on the 19th century (Edvinsson and
+% Broström 2012). 
+% 
+% For our purpose, it is important to notice that the effect of exposure to the famine remains essentially the same. These intermediate variables do not explain the associations we have found. 
+% 
+% %%Nothing much changes, the effect of exposure to the famine remains
+% %%essentially the same, and the extra, intermediate, covariates do not mean much.
+% 
+% Thereafter, we look at the male results, see Table~\ref{tab:fintotman}.
+% <<fintotman,results='asis'>>=
+% fit.tm <- aftreg(Surv(enter, exit, event) ~ inUtero + Childhood + ses.50 + civst.50, 
+%               data = old1[old1$sex == "man", ], dist = "gompertz", param = "lifeExp")
+% dr <- drop1(fit.tm, test = "Chisq")
+% ltx(fit.tm, dr = dr, caption = 'Total mortality for men, including intermediate covariates. AFT regression with the Gompertz baseline distribution.', 
+%     label = 'tab:fintotman')
+% @ 
+% For men we get the expected effect of being married, life expectancy is
+% increased by some 7\% compared with the unmarried. As indicated above,
+% being married was more important for men than for women. This was one of
+% the most protective variables for males. High social position, however and
+% perhaps surprisingly for many, was a disadvantage. Admittedly, this society
+% was not characterized by any large social inequalities. Still we could
+% expect that access to more resources would be beneficial for survival but
+% this was not the case. 
+% 
+% Corresponding to the results on women, these intermediate variables did not
+% alter our previous results on the long-term effect of the crisis. Adult men
+% were not affected in the same way as women. 
+% 
+% 
+% \subsection{Cardiovascular mortality}
+% 
+% %For cardiovascular diseases, we present the results for the effect of exposure to %the crisis in infancy. We found above that those experiencing the harvest failure %in utero in fact had better survival in old age. These results are however %uncertain as indicated by $p$-values. The association between old age survival %and exposure in infancy is also rather uncertain, but the previous results did %however indicate a larger risk for the exposed group. 
+% 
+% The results from Table~\ref{tab:fincardwoman} do not change the effect of
+% exposure in infancy copmared to Table~\ref{tab:t13card}, although it has
+% increased somewhat in this model to a risk of 1.32. We have controlled for
+% social position at age 50 and marital status. Social position in particular
+% was important, but maybe surprisingly in the way that the assumed wealthier
+% groups had higher cardiovascular mortality. It was once again more
+% beneficial to be married. Sex did however have only marginal impact on this
+% disease group.   
+% 
+% %%The results for women and men in Table~\ref{tab:fincardwoman}
+% <<fincardwoman,results='asis'>>=
+% fit <- phreg(Surv(enter, exit, event == 1 & cause == 19) ~ inUtero + Infancy + ses.50 + civst.50 + sex, 
+%               data = old1, dist = "gompertz")
+% dr <- drop1(fit, test = "Chisq")
+% ltx(fit, dr = dr, caption = 'Cardiovascular mortality, including intermediate covariates. PH regression with the Gompertz baseline distribution.', 
+%     label = 'tab:fincardwoman')
+% @
+% %%Nothing much changes, the effect of exposure to the famine remains
+% %%essentially the same, but the extra, intermediate, covariates do mean a lot.
+% 
+% %Then the male results, see Table~\ref{tab:fincardman}.
+% %<<fincardman,results='asis'>>=
+% %fit <- phreg(Surv(enter, exit, event == 1 & cause == 19) ~ Preg + Infant + ses.50 + civst.50, 
+% %              data = old1[old1$sex == "man", ], dist = "gompertz")
+% %dr <- drop1(fit, test = "Chisq")
+% %ltx(fit, dr = dr, caption = 'Cardiovascular mortality for men, including intermediate covariates. PH regression with the Gompertz %baseline distribution.', 
+% %    label = 'tab:fincardman')
+% %@ 
+% %Same conclusion as for the women.
+% 
+\section{The extended Gompertz distribution}
+
+In a thought-provocing paper, \citet{dobl13} suggest that the effect of the 
+famine on old age mortality show up in the shape of a selection effect, rather 
+than directly observable shorter life. That is, the famine has the effect of 
+making survivors stronger on average than if there had not been a famine. 
+Therefore, they argue, the fact that the survivors of the famine have almost the 
+same survival chances in old age is in fact a proof of the negative effect of 
+the famine; hadn't it been there, they should have lived longer on average than
+those who were not exposed to the famine.
+
+This is of course very speculative, and it takes a strong assumption to make it
+real. The assumption is that mortality beyond age sixty follows a Gompertz 
+distribution with hazard function
+\begin{equation}\label{eq:gomphaz}
+h(t; (\alpha, \gamma)) = \alpha e^{\gamma t}; \quad t > 0, \alpha > 0,
+\end{equation}
+where $t$ is time since the the sixtieth birthdate (could equivalently be chosen 
+as age, it would only affect the value of $\alpha$). The individual frailty 
+model assumes that to each individual in the population is attached a random
+value $Z$; all these values are drawn independently from a Gamma distribution
+with mean 1 and variance $\delta$, an unknown positive parameter, taken as a 
+measure of the degree of heterogeneity of the population. If $\delta = 0$, the 
+population is homogeneous, with each individual following the mortality pattern
+given by \eqref{eq:gomphaz}.
+
+The general frailty model is thus, for given $Z$:
+\begin{equation}\label{eq:gompfrail}
+h(t; (\alpha, \gamma) \mid Z) = Z \alpha e^{\gamma t}, \quad t > 0, \alpha > 0.
+\end{equation}
+From this we can derive the population survival distribution by integrating over
+the distribution of $Z$ (the gamma distribution). The result for the hazard 
+function $\mu$ is
+\begin{equation}\label{eq:mixmod}
+\begin{split}
+\mu(t, (\alpha, \gamma, \delta)) &= 
+\frac{h(t; (\alpha, \gamma))}{ 1 + \delta \int_0^t h(s; (\alpha, \gamma)) ds} \\
+&= \frac{\alpha e^{\gamma t}}{1  + \delta \alpha (\exp(\gamma t) - 1) / \gamma }
+\end{split}
+\end{equation}
+Since the numerator of \eqref{eq:mixmod} is equal to the original Gompertz hazard
+function and the denominator increases with time, the effect of frailty is to 
+"drag down" the hazard function. This effect is increasing with $\delta$, the 
+frailty variance. See Figure~\ref{fig:frailfig}.
+
+<<frailfig, fig.cap = "Effect of frailty.", fig.height = 8>>=
+require(eha2)
+par(lwd = 2)
+x <- seq(0, 40, length = 100)
+plot(x, hGgompertz(x, shape = 0.016, scale = 5, frail = 0), type = "l", ylab = "", 
+     ylim = c(0, 10))
+
+lines(x, hGgompertz(x, shape = 0.016, scale = 5, frail = 0.1), col = "red", lty = 2)
+lines(x, hGgompertz(x, shape = 0.016, scale = 5, frail = 0.01), col = "blue", lty = 4)
+text(23, 8, "delta = 0", cex = 1.5)
+text(36, 4.4, "delta = 0.01", col = "blue", cex = 1.5)
+text(32, 0.8, "delta = 0.1", col = "red", lty = 2, cex = 1.5)
+abline(h = 0)
+@
+
+\section{Cohort analysis by the extended Gompertz distribution}
+
+We follow the same path as did \citet{dobl13}; three birth cohorts, 1853.00--1864.50, 1864.50--1868.00, and 1868.00--1881.00 are 
+separately fitted to the extended Gamma distribution, for women and men. 
+<<kriscons,echo=FALSE,results='asis',cache=FALSE>>=
+old1$crisis <- cut(old1$birthdate, c(1853, 1864.5, 1868, 1881), labels = c("before", "yes", "after"))
+xt <- xtable(with(old1, table(crisis, sex)), caption = "Sex by crisis; 'yes' = 1864.50-1868.00.")
+print(xt)
+@
+
+\subsection{Extended Gompertz with women}
+First women are investigated. Models with frailty variance freely varying and fixed at zero ate fitted for each of the three time periods, and the maximized log likelihood values are compared ({\tt ll} and {\tt ll0}, respectively). 
+<<ggwom,echo = FALSE, results='asis',warning=FALSE>>=
+require(eha2)
+library(xtable)
+fem <- old1[old1$sex == "woman", ]
+fit.before <- with(fem[fem$crisis == "before", ], gompreg(enter, exit, event))
+fit.b <- phreg(Surv(enter, exit, event) ~ 1, data = fem[fem$crisis == "before", ], dist = "gompertz")
+fit.yes <- with(fem[fem$crisis == "yes", ], gompreg(enter, exit, event))
+fit.y <- phreg(Surv(enter, exit, event) ~ 1, data = fem[fem$crisis == "yes", ], dist = "gompertz")
+fit.after <- with(fem[fem$crisis == "after", ], gompreg(enter, exit, event))
+fit.a <- phreg(Surv(enter, exit, event) ~ 1, data = fem[fem$crisis == "after", ], dist = "gompertz")
+wmat <- rbind(fit.before$par, fit.yes$par, fit.after$par)
+ll <- c(fit.before$loglik, fit.yes$loglik, fit.after$loglik)
+wmat <- cbind(wmat, ll)
+ll0 <- c(fit.b$loglik[2], fit.y$loglik[2], fit.a$loglik[2])
+wmat <- cbind(wmat, ll0)
+rownames(wmat) <- c("Before", "Crisis", "After")
+##wmat
+xt <- xtable(wmat, caption = "Extended Gompertz fit, women.")
+print(xt)
+@
+Obviously the frailty variances is very small, and non-significant (the two likelihood values are approximately equal).
+
+\subsection{Extended Gompertz with men}
+Then men are investigated in the same way, see below.
+<<ggmen,echo = FALSE,results='asis',warning=FALSE>>=
+library(xtable)
+require(eha2)
+men <- old1[old1$sex == "man", ]
+mfit.before <- with(men[fem$crisis == "before", ], gompreg(enter, exit, event))
+mfit.b <- phreg(Surv(enter, exit, event) ~ 1, data = men[men$crisis == "before", ], dist = "gompertz")
+mfit.yes <- with(fem[men$crisis == "yes", ], gompreg(enter, exit, event))
+mfit.y <- phreg(Surv(enter, exit, event) ~ 1, data = men[men$crisis == "yes", ], dist = "gompertz")
+mfit.after <- with(men[fem$crisis == "after", ], gompreg(enter, exit, event))
+mfit.a <- phreg(Surv(enter, exit, event) ~ 1, data = men[men$crisis == "after", ], dist = "gompertz")
+mmat <- rbind(mfit.before$par, mfit.yes$par, mfit.after$par)
+mll <- c(mfit.b$loglik[2], mfit.y$loglik[2], mfit.a$loglik[2])
+mmat <- cbind(mmat, mll)
+mll0 <- c(mfit.b$loglik[2], mfit.y$loglik[2], mfit.a$loglik[2])
+mmat <- cbind(mmat, mll0)
+rownames(mmat) <- c("Before", "Crisis", "After")
+#print(mmat)
+xt <- xtable(mmat, caption = "Extended Gompertz fit, men.")
+print(xt)
+@
+The same conclusion as for women can be drawn here; the frailty variance is both practically and statistically zero.
+
+\subsection{Summary of the extended Gompertz distribution}
+The conclusion to be drawn is that the frailty model is not improving any analysis in the Skellefteå case. In the Finnish case, on the other hand, the frailty variances were of the magnitude 1000 times larger, which made a difference, although not that large.
+
+We finish by showing the differences between the birth cohorts.
+<<femplot, echo = FALSE, fig.cap="Denity plots, women.">>=
+x <- seq(0, 20, length = 100)
+wfit <- phreg(Surv(enter, exit, event) ~ strata(crisis), dist = "gompertz", data = fem)
+plot(wfit, fn = "sur", xlab = "Years after 60", main = "")
+@
+
+<<manplot, echo = FALSE, fig.cap = "Density plots, men.">>=
+x <- seq(0, 20, length = 100)
+wfit <- phreg(Surv(enter, exit, event) ~ strata(crisis), dist = "gompertz", data = men)
+plot(wfit, fn = "sur", xlab = "Years after 60", main = "")
+@
+
+\section{Concluding discussion}
+
+We started with the question if the harvest failure of 1867 and the
+accompanying famine led to higher mortality risks, both all cause mortality
+and mortality from cardiovascular diseases, in old age for those being
+children during the worst crisis. Several studies have found such early
+life effects and effects of conditions in utero, but studies on the
+long-term effects of this harvest failure have reached different
+conclusions. Our study provides another piece of the puzzle. We establish
+that the harvest failure certainly led to a serious subsistence crisis. We
+do however find no indication of long-term effects from exposure in utero
+or during infancy on all-cause mortality. 
+
+We have however found a rather strong long lasting effect of the 1867--68 famine on
+mortality for exposure during the second and third year of life for women. Despite the fact that this study may be regarded as a randomized
+(by nature) experiment, causal interpretations are risky.
+
+%%We also found that \emph{birth season} have an impact on old age mortality,
+%%however not as strong as exposure to the famine in the ages 1 and 2. 
+Concerning cardiovascular mortality, it is difficult to come to definite conclusions with the cohorts we have studied here. The results indicate different effects depending on age group exposed. For exposure in utero, it seems rather to be positive for survival, while it was negative when exposed in infancy. 
+
+The mediation analysis gave nothing, but this is probably not the last word
+in this matter. There is a lively research activity going on in the
+epidemiological and statistical communities, including our own modest
+efforts. Possible future developments include a cautious return to parametric
+models; much of the identifiability problems we see now are due to an eager
+to be non-parametric.
+
+How do then our results relate to previous studies and what can be learnt
+from them? The fact that we find the association with all-cause mortality
+in the age group after infancy is worth notice. Most studies have either
+focused on conditions in utero, motivated by the Barker hypothesis, or
+conditions during infancy or in some cases both. The second and third year
+are however also important in the development of children. Another
+circumstance that may support the idea that we could easier find the
+association during the second and third year, is that conditions affecting
+nutritional status during infancy may be more varied. Infants being
+breastfed may have been less exposed to the famine. After the first half to
+one year, children become vulnerable for many external influences when they
+are no longer protected by the mother through her transferred immunity. On
+the other hand, the general development of infant and child mortality
+during these years complicates this interpretation. 
+
+Our analyses do not provide any support for long-term effects of conditions
+in utero. We need however to emphasize that we do not strictly address the
+Barker hypothesis in this study. Barker suggested that starvation during
+certain trimesters were particularly important and that then changes in
+access to food was important. This is also something that was suggested in
+\citet{beb00}. In this paper we have not identified exposure during
+different trimesters during gestation or changes during this period. 
+
+An interesting and perhaps confusing finding is the different effect
+depending on gender. We have only established this long-term effect of
+exposure during the second and third year of life for women. Female
+mortality has almost always been lower than male mortality in Sweden for
+all age groups as far back as we have data. There is no support for
+increased death risks for women through gender discrimination (although
+such discrimination was of course very apparent in many respects in
+society). We have no definite explanation for this circumstance. One
+possible explanation is that we see a selection process, where mortality is
+killing off frail men to a higher degree than women. This relate to the
+suggestion by \citet{dobl13} when they suggest that we find an effect of
+the 1867--68 famine on old age mortality in Finland if the frailty effect
+is considered. If our results can be explained by frailty needs further
+elaboration. We are now planning to discuss the possible influence of
+frailty in more detail. 
+
+
+
+\bibliography{mybib}
+
+\end{document}
